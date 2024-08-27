@@ -1,0 +1,13 @@
+1) 
+
+The client doesn't free the board properly, I have the free() call commented out because when implemented it gives "Double free or corruption (out)" error when the keyword is really long (100+) characters. I ran the program with valgrind and the free(), and to my surpise valgrind didn't have any problems & the program didn't abort. In the same scenario without valgrind, the program aborts :( I genuinely don't know what the issue(s) is and given more time I would like to delve deeper into valgrind/gdb to pinpoint the cause. In the meantime i commented out the free() to avoid premature aborts (I am aware that not freeing every malloc is a bad practice). Other than that issue there were no others that I occured in the development of the project. I do however want to mention that my server doesn't quit on its own and requires some sort of kill signal (ctrl + c) because it's waiting for clients to connect (I believe this is what the instructions want).
+
+2) 
+
+To ensure that the code was working properly I tried to use a lot of edge cases. Words that are too long or too many guesses are easy to test for. For the game logic/connections I ran the program many times with the same and different words, giving bad input or trying to break the program was a necessity for my testing. For testing fork() I ran the game on 3 concurrent clients, everything seems to be working. I cannot test every case, but I believe my testing was robust enough to find nearly all of the potential errors.
+
+3) 
+
+Learning what parameters the socket functions use was challenging because I'd never done socket programming. I had issues when reusing ports, but setsockopt() was very helpful. Squashing bugs is always a challenge, especially when they're memory related. I had a lot of issues when writing to the client from the server due to me not sending a correct buffer, the compiler didn't give any errors which made it really hard to narrow down. 
+
+Fun project all together!
